@@ -1,10 +1,11 @@
 let game = document.querySelector("#game");
-let santaHp = document.querySelector("#Santa-Health");
-let grinchHp = document.querySelector("#Grinch-Health");
+let santaScore = document.querySelector("#Santa-Score");
+let snowballCounter = document.querySelector("#Snowball-Counter");
 let santa;
 let grinch;
 let snowball;
 let snowballs = []; // empty array to add thrown snowballs into.
+let score = [];
 let ctx = game.getContext('2d'); // creates x and y
 
 ctx.fillStyle = "white";
@@ -14,6 +15,8 @@ ctx.lineWidth = 5;
 // ====================== SETUP FOR CANVAS RENDERING ======================= //
 game.setAttribute('height', getComputedStyle(game)['height']);
 game.setAttribute('width', getComputedStyle(game)['width']);
+
+
 
 // ====================== ENTITIES ======================= //
 class Player { //==> creates class named player
@@ -70,10 +73,21 @@ function addNewGrinch() {  // ==> new sherk function adds new sherk when hit
       let x = 770; // ==> give random number times(x) game width
       let y = Math.floor(Math.random() * game.height); // ==> give random number times(x) game height
       grinch = new Player(770, y, 'green', 20, 40) 
-    }, 250);
+    }, 120);
     return true;
 }
 
+function countSnowballs() {
+    for (let i=0; i < snowballs.length;i++){
+        snowballCounter.textContent = `SnowBalls Used:${snowballs.length}`;
+       }
+}
+
+function addScore() {
+    for (let i=0; i < score.length;i++){
+        santaScore.textContent = `Score:${score.length * 10} ` ;
+       }
+}
 
 //  KEYBOARD INTERACTION LOGIC //
 
@@ -82,11 +96,11 @@ function movementHandler(e) {
     switch (e.keyCode) {
         //move up 
         case (87):
-            santa.y - 10 >= 0 ? santa.y -= 10 : null;
+            santa.y - 15 >= 0 ? santa.y -= 15 : null;
             break;
         case (83):
             //move  down 
-            santa.y + 10 <= game.height ? santa.y += 10 : null;
+            santa.y + 15 <= game.height ? santa.y += 15 : null;
             break;
         case (32):
             e.preventDefault(); //==>prevents page from scrolling down while pressing space
@@ -102,9 +116,6 @@ function movementHandler(e) {
 
 function gameLoop() {
     ctx.clearRect(0, 0, game.width, game.height);
-    // santa.render();
-    
-    
     if (grinch.alive) {
         grinch.render();
         
@@ -134,9 +145,15 @@ function detectHit (p1, p2) {
     ); // {boolean} : if all are true -> hit
 
     if (hitTest) {
-       addNewGrinch(); // return addNewGrinch(); // ==> add new Grinch function 
+        score.push(hitTest);
+        // console.log(score);
+       addNewGrinch(); // ==> add new Grinch function 
+       addScore();
 
     } else {
+        countSnowballs();
         return false;
+        
+
     }
 }

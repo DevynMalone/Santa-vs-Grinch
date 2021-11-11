@@ -6,12 +6,21 @@ html,body {
 body {
     padding-top: 1em;
     text-align: center;
-    background-color: black;
+    background-color: rgb(130, 181, 248);
     background-size: cover;
     background-repeat: space;
 }
+h1,h2,h3,h4 {
+    color: white;
+    font-family: 'googleapis', monospace;
+}
+strong {
+    color: black
+}
 
 canvas {
+    background-image: url('Grinch-Background.jpeg');
+    background-size: 800px;
     background-color: rgb(248, 248, 248);
     width: 100%;
     height: 100;
@@ -20,7 +29,7 @@ canvas {
 #container {
     max-width: 50em;
     /* height: 70vh; */
-    background-color: rgb(170, 204, 231);
+    background-color: rgb(22, 190, 106);
     margin: 0 auto;
     padding: 1em;
     display: grid;
@@ -36,10 +45,14 @@ canvas {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(145, 159, 179);
+    background-color: rgb(185, 30, 30);
   }
 
 main {
     grid-area: game;
 }
- 
+canvas#game { 
+    border: 1px solid rgb(0, 0, 0); 
+    width: 800px; 
+    height:400px;
+}
