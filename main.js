@@ -1,11 +1,15 @@
 let game = document.querySelector("#game");
 let santaScore = document.querySelector("#Santa-Score");
 let snowballCounter = document.querySelector("#Snowball-Counter");
+let timeDisplay = document.querySelector('#timer');
 let santa;
 let grinch;
 let snowball;
 let snowballs = []; // empty array to add thrown snowballs into.
 let score = [];
+let timer; 
+let timeLeft = 5;
+let gameStatus = true;
 let ctx = game.getContext('2d'); // creates x and y
 
 ctx.fillStyle = "white";
@@ -43,7 +47,7 @@ class Snowball { //==> creates class named snowBall
         this.color = 'black'; //==> all creations will be black
         this.width = 5; //==> all creations will have width of 5
         this.height = 5;
-        this.speed = 50;
+        this.speed = 75;
 
         this.render = function () { //==> function created to render snowball on page
             this.x = this.x + this.speed //==> speed and direction snowball will be going
@@ -58,8 +62,9 @@ class Snowball { //==> creates class named snowBall
 // EVENT LISTENERS //
 
 window.addEventListener('DOMContentLoaded', function (e) {
-    santa = new Player(10, 350, 'red', 50, 50); //==> creates new varible named santa that makes a Player class with these(x,y,color,height,width)
-    grinch = new Player(770, 360, 'green', 20, 40);//==> creates new varible named grinch that makes a Player class with these(x,y,color,height,width)
+    let y = Math.floor(Math.random() * game.height);
+    santa = new Player(10, 160, 'red', 50, 50); //==> creates new varible named santa that makes a Player class with these(x,y,color,height,width)
+    grinch = new Player(770, y, 'rgb(151, 248, 200)', 20, 40);//==> creates new varible named grinch that makes a Player class with these(x,y,color,height,width)
     const runGame = setInterval(gameLoop, 120);
 });
 
@@ -72,7 +77,7 @@ function addNewGrinch() {  // ==> new sherk function adds new sherk when hit
     setTimeout(function() {
       let x = 770; // ==> give random number times(x) game width
       let y = Math.floor(Math.random() * game.height); // ==> give random number times(x) game height
-      grinch = new Player(770, y, 'green', 20, 40) 
+      grinch = new Player(770, y, 'rgb(151, 248, 200)', 20, 40) 
     }, 120);
     return true;
 }
@@ -96,13 +101,18 @@ function movementHandler(e) {
     switch (e.keyCode) {
         //move up 
         case (87):
-            santa.y - 15 >= 0 ? santa.y -= 15 : null;
+            santa.y - 10 >= 0 ? santa.y -= 15 : null;
             break;
         case (83):
             //move  down 
-            santa.y + 15 <= game.height ? santa.y += 15 : null;
+            santa.y + 25 <= game.height ? santa.y += 15 : null;
             break;
         case (32):
+            if (e.keyCode == 32 && gameStatus == false ){
+                console.log('end of game');
+                
+            }
+            else start ();
             e.preventDefault(); //==>prevents page from scrolling down while pressing space
             let snowball1 = new Snowball(santa.width/2 + santa.x, santa.height/2 + santa.y); //==>when space is press creates new varible named snowball that makes a snowBall class with postition santa.XandY
             snowballs.push(snowball1);// adds new varible snowball(with class snowBall) to array named snowBalls
@@ -157,3 +167,43 @@ function detectHit (p1, p2) {
 
     }
 }
+
+
+
+// ==> Timer Function
+//*Todo Create Timer
+//*todo start timer when game starts
+//*keep track of game ending 
+//* once game is over stop player from moving 
+//understanding set intervile and clear intervile!!!
+
+function start () {
+    timer = setInterval(updateTimer, 1000);
+    updateTimer();
+}
+
+
+function updateTimer() {
+    timeLeft = timeLeft - 1;
+    if(timeLeft >= 0){
+        timeDisplay.textContent = `${timeLeft} seconds remaining!`
+    } else {
+        gameOver();
+        gameStatus = false; 
+          
+    }
+}
+
+function gameOver() {
+    timeDisplay.textContent = 'GAME-OVER'
+    clearInterval(timer);
+    document.removeEventListener('keydown', movementHandler, false);
+    //==> make a way for spacebar to stop working when time-limit is reached
+    //==> need a restart button after game is over 
+    
+}
+
+function refreshPage(){
+    window.location.reload();
+} 
+
