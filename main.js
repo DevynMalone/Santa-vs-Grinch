@@ -2,13 +2,16 @@ let game = document.querySelector("#game");
 let santaScore = document.querySelector("#Santa-Score");
 let snowballCounter = document.querySelector("#Snowball-Counter");
 let timeDisplay = document.querySelector('#timer');
+let santaAvatar = document.querySelector('#santa-avatar');
+console.log(santaAvatar);
+let grinchAvatar = document.querySelector('#grinch-avatar');
 let santa;
 let grinch;
 let snowball;
 let snowballs = []; // empty array to add thrown snowballs into.
 let score = [];
 let timer; 
-let timeLeft = 5;
+let timeLeft = 60;
 let gameStatus = true;
 let ctx = game.getContext('2d'); // creates x and y
 
@@ -34,7 +37,24 @@ class Player { //==> creates class named player
 
         this.render = function () { //==> function created to render class Player on page
             ctx.fillStyle = this.color//==> renders color of Player
-            ctx.fillRect(this.x, this.y, this.width, this.height);//==> makes a rectangle on page from Player class
+            ctx.drawImage(santaAvatar,this.x, this.y, this.width, this.height);//==> makes a rectangle on page from Player class
+        }
+
+    }
+}
+
+class Ai { //==> creates class named player
+    constructor(x, y, color, width, height) { //==>has to define everytime you make a new creation
+        this.x = x;// ==> info can change per creation
+        this.y = y;// ==> info can change per creation
+        this.color = color;// ==> info can change per creation
+        this.width = width;//==>
+        this.height = height;//==>
+        this.alive = true;// for all creations info is true
+
+        this.render = function () { //==> function created to render class Player on page
+            ctx.fillStyle = this.color//==> renders color of Player
+            ctx.drawImage(grinchAvatar,this.x, this.y, this.width, this.height);//==> makes a rectangle on page from Player class
         }
 
     }
@@ -64,7 +84,7 @@ class Snowball { //==> creates class named snowBall
 window.addEventListener('DOMContentLoaded', function (e) {
     let y = Math.floor(Math.random() * game.height);
     santa = new Player(10, 160, 'red', 50, 50); //==> creates new varible named santa that makes a Player class with these(x,y,color,height,width)
-    grinch = new Player(770, y, 'rgb(151, 248, 200)', 20, 40);//==> creates new varible named grinch that makes a Player class with these(x,y,color,height,width)
+    grinch = new Ai(770, y, 'rgb(151, 248, 200)', 40, 60);//==> creates new varible named grinch that makes a Player class with these(x,y,color,height,width)
     const runGame = setInterval(gameLoop, 120);
 });
 
@@ -77,7 +97,7 @@ function addNewGrinch() {  // ==> new sherk function adds new sherk when hit
     setTimeout(function() {
       let x = 770; // ==> give random number times(x) game width
       let y = Math.floor(Math.random() * game.height); // ==> give random number times(x) game height
-      grinch = new Player(770, y, 'rgb(151, 248, 200)', 20, 40) 
+      grinch = new Ai(770, y, 'rgb(151, 248, 200)', 40, 60) 
     }, 120);
     return true;
 }
