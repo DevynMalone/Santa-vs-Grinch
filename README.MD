@@ -19,4 +19,4 @@ S - Move Down
 
 SPACEBAR - Shoot Snowballs
 
-![Wireframe](PROJECT_1_WIREFRAME.png)
+![Wireframe](Finished_look.png)
