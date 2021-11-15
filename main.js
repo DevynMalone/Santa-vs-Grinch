@@ -128,14 +128,14 @@ function movementHandler(e) {
             break;
         case (32):
             if (e.keyCode == 32 && gameStatus == false ){
-                console.log('end of game');
+                
                 
             }
-            else 
+            else start ();
             e.preventDefault(); //==>prevents page from scrolling down while pressing space
             let snowball1 = new Snowball(santa.width/2 + santa.x, santa.height/2 + santa.y); //==>when space is press creates new varible named snowball that makes a snowBall class with postition santa.XandY
             snowballs.push(snowball1);// adds new varible snowball(with class snowBall) to array named snowBalls
-            start ();
+            
 
     }
 
@@ -203,6 +203,7 @@ function gameOver() {
     timeDisplay.textContent = 'GAME-OVER'
     clearInterval(timer);
     document.removeEventListener('keydown', movementHandler, false);
+    
     
 }
 
