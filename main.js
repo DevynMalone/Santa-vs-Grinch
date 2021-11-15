@@ -3,7 +3,6 @@ let santaScore = document.querySelector("#Santa-Score");
 let snowballCounter = document.querySelector("#Snowball-Counter");
 let timeDisplay = document.querySelector('#timer');
 let santaAvatar = document.querySelector('#santa-avatar');
-console.log(santaAvatar);
 let grinchAvatar = document.querySelector('#grinch-avatar');
 let santa;
 let grinch;
@@ -11,7 +10,7 @@ let snowball;
 let snowballs = []; // empty array to add thrown snowballs into.
 let score = [];
 let timer; 
-let timeLeft = 60;
+let timeLeft = 120;
 let gameStatus = true;
 let ctx = game.getContext('2d'); // creates x and y
 
@@ -67,7 +66,7 @@ class Snowball { //==> creates class named snowBall
         this.color = 'black'; //==> all creations will be black
         this.width = 5; //==> all creations will have width of 5
         this.height = 5;
-        this.speed = 75;
+        this.speed = 85;
 
         this.render = function () { //==> function created to render snowball on page
             this.x = this.x + this.speed //==> speed and direction snowball will be going
@@ -132,11 +131,11 @@ function movementHandler(e) {
                 console.log('end of game');
                 
             }
-            else start ();
+            else 
             e.preventDefault(); //==>prevents page from scrolling down while pressing space
             let snowball1 = new Snowball(santa.width/2 + santa.x, santa.height/2 + santa.y); //==>when space is press creates new varible named snowball that makes a snowBall class with postition santa.XandY
             snowballs.push(snowball1);// adds new varible snowball(with class snowBall) to array named snowBalls
-        
+            start ();
 
     }
 
@@ -164,9 +163,6 @@ for (let i=0; i < snowballs.length;i++){ // creates for Loop to display all snow
 // ====================== COLLISION DETECTION ======================= //
 
 function detectHit (p1, p2) {
-    // what do we know know to be true
-    // what conditions must false for the hit to be true
-    // Crawler ( x, y, width, height )
     let hitTest = (
         p1.y + p1.height > p2.y &&  // ==> checking to see if a hit was dectected (x and y of charcters)(player.1 & player.2)
         p1.y < p2.y + p2.height &&
@@ -176,8 +172,7 @@ function detectHit (p1, p2) {
 
     if (hitTest) {
         score.push(hitTest);
-        // console.log(score);
-       addNewGrinch(); // ==> add new Grinch function 
+        addNewGrinch(); // ==> add new Grinch function 
        addScore();
 
     } else {
@@ -187,18 +182,8 @@ function detectHit (p1, p2) {
 
     }
 }
-
-
-
-// ==> Timer Function
-//*Todo Create Timer
-//*todo start timer when game starts
-//*keep track of game ending 
-//* once game is over stop player from moving 
-//understanding set intervile and clear intervile!!!
-
 function start () {
-    timer = setInterval(updateTimer, 1000);
+    timer = setInterval(updateTimer, 5000);
     updateTimer();
 }
 
@@ -218,8 +203,6 @@ function gameOver() {
     timeDisplay.textContent = 'GAME-OVER'
     clearInterval(timer);
     document.removeEventListener('keydown', movementHandler, false);
-    //==> make a way for spacebar to stop working when time-limit is reached
-    //==> need a restart button after game is over 
     
 }
 

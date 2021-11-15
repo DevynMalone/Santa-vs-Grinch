@@ -4,6 +4,7 @@ html,body {
 }
 
 body {
+    background-image: url('winter-landscape.webp');
     padding-top: 1em;
     text-align: center;
     background-color: rgb(130, 181, 248);
@@ -27,6 +28,7 @@ canvas {
 }
 
 #container {
+    background-image: url('christmas-light-p2.jpeg');
     max-width: 50em;
     /* height: 70vh; */
     background-color: rgb(22, 190, 106);
@@ -45,7 +47,7 @@ canvas {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(185, 30, 30);
+    background-color: rgb(240, 59, 59);
   }
 
 main {
